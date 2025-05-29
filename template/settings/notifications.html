@@ -1,0 +1,17 @@
+{% extends 'layout/base.html' %}
+{% block title %} Notifications {% endblock %}
+
+{% block headers %} 
+
+{% endblock %}
+
+{% block content %}
+
+    {% include 'partials/settings/notifications_content.html' %}
+
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/sb-customizer.js') }}"></script>  
+{% endblock %}

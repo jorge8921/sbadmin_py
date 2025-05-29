@@ -1,5 +1,3 @@
-# sbadmin_py
-SB Admin -  Basic SPA with Flask + vanilla JS
 # Flask Dynamic SPA Template
 
 This repository provides a simple structure for building a Single Page Application (SPA) with Flask using HTML templates, Bootstrap, and JavaScript `fetch()` for dynamic content loading without full-page reloads.

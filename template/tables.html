@@ -1,0 +1,27 @@
+{% extends 'layout/base.html' %}
+{% block title %}Tables{% endblock %}
+
+{% block header %}
+<link href="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+
+{% block content %}
+    {% include 'partials/tables_content.html' %}
+{% endblock %}
+
+{% block scripts %}
+
+    <!-- Page level plugins -->  
+
+    <!-- Page level custom scripts -->
+
+        <!-- Page level plugins -->
+    <script src="{{ url_for('static', filename='vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{{ url_for('static', filename='js/demo/datatables-demo.js') }}"></script>
+
+{% endblock %}

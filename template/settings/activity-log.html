@@ -1,0 +1,16 @@
+{% extends 'layout/base.html' %}
+{% block title %} Activity Log {% endblock %}
+{% block header %}
+<script data-search-pseudo-elements="" defer="" src="{{ url_for('static', filename='js/font-awesome/all.min.js') }}" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/feather.min.js') }}"></script>
+{% endblock %}
+{% block content %}
+
+    {% include 'partials/settings/activity_log_content.html' %}
+
+{% endblock %}
+
+
+{% block scripts %}
+
+{% endblock %}

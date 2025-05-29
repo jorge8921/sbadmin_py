@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700,800,900" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/img/favicon.png') }}" />
+    <!-- <script src="{{ url_for('static', filename='css/styles.css') }}"></script>   -->
+
+    {% block headers %}{% endblock %}
+
+</head>
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        {% include 'layout/sidebar.html' %}
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                {% include 'layout/topbar.html' %}
+                <!-- End of Topbar -->
+
+                <!-- Page Content -->
+                 <main id="main-content">
+                    {% block content %}{% endblock %}
+                 </main>
+                
+            </div>
+
+            <!-- Footer -->
+            {% include 'layout/footer.html' %}
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    {% include 'layout/logout_modal.html' %}
+
+    <!-- Scripts -->
+     
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+     <script src="https://assets.startbootstrap.com/js/sb-customizer.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{{ url_for('static', filename='js/sb-admin-2.min.js') }}"></script>
+
+    {% block scripts %}{% endblock %}
+
+ <script>
+  async function loadPage(url) {
+  try {
+    const response = await fetch(url, {
+      headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    });
+
+    if (!response.ok) throw new Error('Error al cargar la página.');
+
+    const data = await response.json();
+    document.getElementById('main-content').innerHTML = data.content;
+    document.title = data.title;
+    history.pushState(null, '', url);
+    updateActiveLink(url);
+
+    // Cargar scripts si vienen definidos
+    if (data.scripts && Array.isArray(data.scripts)) {
+      data.scripts.forEach(src => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.async = false;
+        document.body.appendChild(script);
+      });
+    }
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+
+  function updateActiveLink(currentUrl) {
+  const normalizedCurrentUrl = new URL(currentUrl, window.location.origin).pathname.replace(/\/+$/, '');
+
+  // Primero, remover todos los "show", "active", "collapsed"
+  document.querySelectorAll('.collapse').forEach(collapse => collapse.classList.remove('show'));
+  document.querySelectorAll('.nav-item').forEach(navItem => navItem.classList.remove('active'));
+  document.querySelectorAll('[data-toggle="collapse"]').forEach(trigger => trigger.classList.add('collapsed'));
+  document.querySelectorAll('a.ajax-link').forEach(link => link.classList.remove('active'));
+
+  // Activar el enlace actual
+  document.querySelectorAll('a.ajax-link').forEach(link => {
+    const linkUrl = new URL(link.href, window.location.origin).pathname.replace(/\/+$/, '');
+    const isActive = linkUrl === normalizedCurrentUrl;
+
+    if (isActive) {
+      link.classList.add('active');
+
+      const collapseDiv = link.closest('.collapse');
+      const navItem = link.closest('.nav-item');
+      const triggerLink = navItem?.querySelector('[data-toggle="collapse"]');
+
+      if (collapseDiv && navItem) {
+        collapseDiv.classList.add('show');
+        navItem.classList.add('active');
+        triggerLink?.classList.remove('collapsed');
+      } else if (navItem) {
+        navItem.classList.add('active');
+      }
+    }
+  });
+}
+
+
+
+
+  // Inicializar eventos y manejar navegación
+  document.addEventListener('click', function(e) {
+  const link = e.target.closest('a.ajax-link');
+  if (link) {
+    e.preventDefault();
+    const url = link.href;
+    loadPage(url);
+  }
+});
+
+  window.addEventListener('popstate', () => {
+    loadPage(location.pathname);
+  });
+  updateActiveLink(location.pathname);
+</script>
+
+</body>
+
+</html>
