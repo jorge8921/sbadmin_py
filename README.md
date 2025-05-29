@@ -55,8 +55,8 @@ templates/
 ## 🔧 Running the App
 
 1. Clone the repo:
-   git clone https://github.com/jorge8921/sbadmin_py.git
-   cd sbadmin_py
+# git clone https://github.com/jorge8921/sbadmin_py.git
+# cd sbadmin_py
 
 
 Create a virtual environment:
